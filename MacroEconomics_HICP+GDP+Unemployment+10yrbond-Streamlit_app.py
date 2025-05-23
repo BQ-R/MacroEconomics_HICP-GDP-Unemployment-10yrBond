@@ -147,7 +147,7 @@ if st.button(ui["generate"]) and direccion and kpis_seleccionados:
                 url = f"https://data-api.ecb.europa.eu/service/data/IRS/{serie_bce}?format=csvdata&startPeriod={anio_corte}-01"
                 r = requests.get(url)
                 r.raise_for_status()
-                df_bonos = pd.read_csv(pd.compat.StringIO(r.text))
+                df_bonos = pd.read_csv(StringIO(r.text))
                 df_bonos = df_bonos[["TIME_PERIOD", "OBS_VALUE"]].rename(
                     columns={"TIME_PERIOD": "Periodo", "OBS_VALUE": "Valor"}
                 )
