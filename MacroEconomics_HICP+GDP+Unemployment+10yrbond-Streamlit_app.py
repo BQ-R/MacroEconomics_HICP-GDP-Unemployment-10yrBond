@@ -6,6 +6,7 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from openai import OpenAI
 import matplotlib.dates as mdates
+from io import StringIO  # ✅ para manejar el CSV desde ECB
 
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
@@ -147,6 +148,7 @@ if st.button(ui["generate"]) and direccion and kpis_seleccionados:
                 url = f"https://data-api.ecb.europa.eu/service/data/IRS/{serie_bce}?format=csvdata&startPeriod={anio_corte}-01"
                 r = requests.get(url)
                 r.raise_for_status()
+
                 df_bonos = pd.read_csv(StringIO(r.text))
                 df_bonos = df_bonos[["TIME_PERIOD", "OBS_VALUE"]].rename(
                     columns={"TIME_PERIOD": "Periodo", "OBS_VALUE": "Valor"}
@@ -209,7 +211,3 @@ if st.button(ui["generate"]) and direccion and kpis_seleccionados:
 
         except Exception as e:
             st.error(f"❌ Error al procesar: {e}")
-
-
-
-
