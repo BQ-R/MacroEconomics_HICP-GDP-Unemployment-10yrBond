@@ -1,0 +1,6 @@
+streamlit
+pandas
+matplotlib
+openai
+requests
+python-dateutil
